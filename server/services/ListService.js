@@ -5,7 +5,15 @@ let ObjectId = Schema.Types.ObjectId
 let _schema = new Schema({
   title: { type: String, required: true },
   authorId: { type: ObjectId, ref: 'User', required: true },
-  boardId: { type: ObjectId, ref: 'Board', required: true }
+  boardId: {
+    type: ObjectId, ref: 'Board', required: true, set: function (v) {
+      if (this.boardId) {
+        return this.boardId
+      } else {
+        return v
+      }
+    }
+  }
 }, { timestamps: true })
 
 //CASCADE ON DELETE
