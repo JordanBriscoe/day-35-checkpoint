@@ -33,6 +33,10 @@ export default new Vuex.Store({
     },
     addList(state, list) {
       state.activeBoard.lists.push(list)
+    },
+    deleteList(state, listId) {
+      let index = state.activeBoard.lists.findIndex(elem => elem._id === listId)
+      state.activeBoard.lists.splice(index, 1)
     }
   },
   actions: {
@@ -93,6 +97,11 @@ export default new Vuex.Store({
     addList({ commit, dispatch }, newList) {
       api.post('lists', newList)
         .then(res => commit('addList', res.data))
+        .catch(error => console.error(error))
+    },
+    deleteList({ commit, dispatch }, listId) {
+      api.delete('lists/' + listId)
+        .then(res => commit('deleteList', listId))
         .catch(error => console.error(error))
     }
 

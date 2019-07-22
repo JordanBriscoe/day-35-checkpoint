@@ -7,6 +7,7 @@
     </form>
     <div v-for="list in lists">
       This is some random text
+      <button @click="deleteList(list._id)" class='btn btn-outline-danger'>Delete</button>
     </div>
 
   </div>
@@ -46,6 +47,10 @@
           title: '',
           boardId: this.boardId
         }
+      },
+      deleteList(listId) {
+        this.$store.dispatch('deleteList', listId)
+
       }
     },
     props: ["boardId"]
