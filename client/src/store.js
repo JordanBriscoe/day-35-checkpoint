@@ -26,6 +26,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
+    setActiveBoard(state, board) {
+      state.activeBoard = board
+    },
     setBoards(state, boards) {
       state.boards = boards
     },
@@ -85,6 +88,11 @@ export default new Vuex.Store({
         .then(serverBoard => {
           dispatch('getBoards')
         })
+    },
+    getBoard({ commit, dispatch }, boardId) {
+      api.get('boards/' + boardId)
+        .then(res => commit('setActiveBoard', res.data))
+        .catch(error => console.error(error))
     },
     //#endregion
 

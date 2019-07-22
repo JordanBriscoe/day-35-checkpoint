@@ -16,6 +16,7 @@
 <script>
   export default {
     mounted() {
+      this.$store.dispatch('getBoard', this.boardId)
       this.$store.dispatch("getListsByBoard", this.boardId)
     },
     name: "board",
@@ -25,8 +26,7 @@
       },
       board() {
         return (
-          //FIXME This does not work on page reload because the boards array is empty in the store
-          this.$store.state.boards.find(b => b._id == this.boardId) || {
+          this.$store.state.activeBoard || {
             title: "Loading..."
           }
         );
