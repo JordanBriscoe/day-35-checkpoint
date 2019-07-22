@@ -6,7 +6,7 @@
       <button type="submit">Create New List</button>
     </form>
     <div v-for="list in lists">
-      This is some random text
+      {{list.title}}
       <button @click="deleteList(list._id)" class='btn btn-outline-danger'>Delete</button>
     </div>
 
@@ -21,7 +21,7 @@
     name: "board",
     computed: {
       lists() {
-        return this.$store.state.activeBoard.lists
+        return this.$store.state.activeLists
       },
       board() {
         return (

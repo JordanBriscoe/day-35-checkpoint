@@ -19,7 +19,8 @@ export default new Vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {}
+    activeBoard: {},
+    activeLists: []
   },
   mutations: {
     setUser(state, user) {
@@ -28,15 +29,15 @@ export default new Vuex.Store({
     setBoards(state, boards) {
       state.boards = boards
     },
-    setActiveBoardLists(state, lists) {
-      state.activeBoard.lists = lists
+    setActiveLists(state, lists) {
+      state.activeLists = lists
     },
     addList(state, list) {
-      state.activeBoard.lists.push(list)
+      state.activeLists.push(list)
     },
     deleteList(state, listId) {
-      let index = state.activeBoard.lists.findIndex(elem => elem._id === listId)
-      state.activeBoard.lists.splice(index, 1)
+      let index = state.activeLists.findIndex(elem => elem._id === listId)
+      state.activeLists.splice(index, 1)
     }
   },
   actions: {
@@ -91,7 +92,7 @@ export default new Vuex.Store({
     //#region -- LISTS --
     getListsByBoard({ commit, dispatch }, boardId) {
       api.get('lists/board/' + boardId)
-        .then(res => commit('setActiveBoardLists', res.data))
+        .then(res => commit('setActiveLists', res.data))
         .catch(error => console.error(error))
     },
     addList({ commit, dispatch }, newList) {
