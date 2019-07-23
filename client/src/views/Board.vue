@@ -16,6 +16,7 @@
     mounted() {
       this.$store.dispatch('getBoard', this.boardId)
       this.$store.dispatch("getListsByBoard", this.boardId)
+      this.$store.dispatch("getTasksByBoard", this.boardId)
     },
     name: "board",
     components: {
