@@ -5,12 +5,13 @@
       <input type="text" placeholder="title" v-model='newList.title' required>
       <button type="submit">Create New List</button>
     </form>
-    <list-element v-for="list in lists" v-bind:list="list"></list-element>
+    <list-element v-for="list in lists" :key="list._id" v-bind:list="list"></list-element>
   </div>
 </template>
 
 <script>
   import List from '@/components/List.vue'
+  import draggable from 'vuedraggable'
 
   export default {
     mounted() {
@@ -20,7 +21,8 @@
     },
     name: "board",
     components: {
-      'list-element': List
+      'list-element': List,
+      draggable
     },
     computed: {
       lists() {
