@@ -11,13 +11,14 @@
     </form>
     <div v-for="task in tasks">
       <p>{{task.description}}</p>
+      <button @click="deleteTask(task._id)" class='btn btn-outline-danger'>Delete Task</button>
     </div>
     <div v-for="list in lists">
       <div class="container">
         <div class="row">
           <div class="col">
             {{list.title}}
-            <button @click="deleteList(list._id)" class='btn btn-outline-danger'>Delete</button>
+            <button @click="deleteList(list._id)" class='btn btn-outline-danger'>Delete List</button>
           </div>
         </div>
       </div>
@@ -78,6 +79,10 @@
           description: '',
           listId: ''
         }
+      },
+      deleteTask(taskId) {
+        this.$store.dispatch('deleteTask', taskId)
+
       }
     },
     props: ["boardId"]
