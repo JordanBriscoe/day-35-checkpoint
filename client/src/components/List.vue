@@ -1,16 +1,12 @@
 <template>
-  <div class="container">
+  <div class="list-element container">
     <div class="row">
       <div class="col">
         {{list.title}}
         <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
       </div>
     </div>
-    <div v-for="task in tasks" class="row">
-      <div class="col">
-        <p>{{task.description}}</p>
-      </div>
-    </div>
+    <task-element v-for="task in tasks" v-bind:task="task" v-bind:boardId="list.boardId" class="row"></task-element>
     <div class="row">
       <div class="col">
         <form @submit.prevent="addTask">
@@ -23,12 +19,17 @@
 </template>
 
 <script>
+  import Task from '@/components/Task.vue'
+
   export default {
-    name: 'List',
+    name: 'list-element',
     props: ['list'],
+    components: {
+      'task-element': Task
+    },
     computed: {
       tasks() {
-        return this.$store.state.activeTasks;
+        return this.$store.state.activeTasks.filter(curr => curr.listId === this.list._id);
       },
     },
     data() {
@@ -49,7 +50,7 @@
       addTask() {
         this.newTask.listId = this.list._id;
         this.$store.dispatch('addTask', this.newTask);
-        this.newList = {
+        this.newTask = {
           description: '',
           listId: ''
         }
