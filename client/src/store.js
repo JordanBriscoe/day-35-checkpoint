@@ -20,7 +20,8 @@ export default new Vuex.Store({
     user: {},
     boards: [],
     activeBoard: {},
-    activeLists: []
+    activeLists: [],
+    activeTasks: []
   },
   mutations: {
     setUser(state, user) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     deleteList(state, listId) {
       let index = state.activeLists.findIndex(elem => elem._id === listId)
       state.activeLists.splice(index, 1)
+    },
+    addTask(state, task) {
+      state.activeTasks.push(task)
     }
   },
   actions: {
@@ -112,8 +116,17 @@ export default new Vuex.Store({
       api.delete('lists/' + listId)
         .then(res => commit('deleteList', listId))
         .catch(error => console.error(error))
-    }
+    },
 
+
+    //#endregion
+
+    //#region -- TASKS --
+    addTask({ commit, dispatch }, newTask) {
+      api.post('tasks', newTask)
+        .then(res => commit('addTask', res.data))
+        .catch(error => console.error(error));
+    }
 
     //#endregion
   }
