@@ -9,7 +9,7 @@
 <script>
   export default {
     name: 'task-element',
-    props: ['task', 'boardId'],
+    props: ['task'],
     data() {
       return {}
     },

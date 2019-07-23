@@ -6,7 +6,7 @@
         <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
       </div>
     </div>
-    <task-element v-for="task in tasks" v-bind:task="task" v-bind:boardId="list.boardId" class="row"></task-element>
+    <task-element v-for="task in tasks" v-bind:task="task" class="row"></task-element>
     <div class="row">
       <div class="col">
         <form @submit.prevent="addTask">
@@ -36,7 +36,8 @@
       return {
         newTask: {
           description: '',
-          listId: ''
+          listId: this.list._id,
+          boardId: this.list.boardId
         }
       }
     },
@@ -48,11 +49,11 @@
         this.$store.dispatch('deleteList', this.list._id)
       },
       addTask() {
-        this.newTask.listId = this.list._id;
         this.$store.dispatch('addTask', this.newTask);
         this.newTask = {
           description: '',
-          listId: ''
+          listId: this.list._id,
+          boardId: this.list.boardId
         }
       }
     }

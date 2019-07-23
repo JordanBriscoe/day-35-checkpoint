@@ -7,7 +7,7 @@ export default class TasksController {
     constructor() {
         this.router = express.Router()
             .use(Authorize.authenticated)
-            .get('/list/:listId', this.getByListId)
+            .get('/board/:boardId', this.getByBoardId)
             .post('', this.create)
             .put('/:id', this.edit)
             .delete('/:id', this.delete)
@@ -18,9 +18,9 @@ export default class TasksController {
         next({ status: 404, message: 'No Such Route' })
     }
 
-    async getByListId(req, res, next) {
+    async getByBoardId(req, res, next) {
         try {
-            let data = await _taskService.find({ authorId: req.session.uid, listId: req.params.listId })
+            let data = await _taskService.find({ authorId: req.session.uid, boardId: req.params.boardId })
             return res.send(data)
         } catch (error) {
             next(error)
