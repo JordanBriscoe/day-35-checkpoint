@@ -40,6 +40,12 @@ export default new Vuex.Store({
     setBoards(state, boards) {
       state.boards = boards
     },
+    deleteBoard(state, boardId) {
+      let index = state.boards.findIndex(elem => elem._id === boardId)
+      if (index >= 0) {
+        state.boards.splice(index, 1)
+      }
+    },
     setActiveLists(state, lists) {
       state.activeLists = lists
     },
@@ -48,7 +54,9 @@ export default new Vuex.Store({
     },
     deleteList(state, listId) {
       let index = state.activeLists.findIndex(elem => elem._id === listId)
-      state.activeLists.splice(index, 1)
+      if (index >= 0) {
+        state.activeLists.splice(index, 1)
+      }
     },
     addTask(state, task) {
       state.activeTasks.push(task)
@@ -116,6 +124,11 @@ export default new Vuex.Store({
     getBoard({ commit, dispatch }, boardId) {
       api.get('boards/' + boardId)
         .then(res => commit('setActiveBoard', res.data))
+        .catch(error => console.error(error))
+    },
+    deleteBoard({ commit, dispatch }, boardId) {
+      api.delete('boards/' + boardId)
+        .then(res => commit('deleteBoard', boardId))
         .catch(error => console.error(error))
     },
     //#endregion
