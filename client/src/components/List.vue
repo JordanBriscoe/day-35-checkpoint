@@ -6,7 +6,7 @@
         <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
       </div>
     </div>
-    <drop class="drop" @drop="handleDroppedTask">
+    <drop class="drop py-5" @drop="handleDroppedTask">
       <task-element v-for="task in tasks" :key="task._id" v-bind:task="task" class="row"></task-element>
     </drop>
     <div class="row">

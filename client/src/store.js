@@ -54,8 +54,10 @@ export default new Vuex.Store({
       state.activeTasks = tasks
     },
     updateTask(state, task) {
-      let index = state.activeTasks.findIndex(elem => elem._id === task._id)
-      state.activeTasks.splice(index, 1, task)
+      let index = state.activeTasks.findIndex(elem => elem._id == task._id)
+      if (index >= 0) {
+        state.activeTasks.splice(index, 1, task);
+      }
     }
   },
   actions: {
@@ -160,7 +162,7 @@ export default new Vuex.Store({
     },
     updateTaskListId({ commit, dispatch }, payload) {
       api.put('tasks/' + payload._id, payload)
-        .then(res => commit('updateTask', res))
+        .then(res => commit('updateTask', res.data))
         .catch(error => console.error(error))
     }
 
