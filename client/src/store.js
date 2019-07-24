@@ -27,6 +27,15 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
     },
+    resetState(state) {
+      state = {
+        user: {},
+        boards: [],
+        activeBoard: {},
+        activeLists: [],
+        activeTasks: []
+      }
+    },
     setActiveBoard(state, board) {
       state.activeBoard = board
     },
@@ -72,6 +81,7 @@ export default new Vuex.Store({
     async login({ commit, dispatch }, creds) {
       try {
         let user = await AuthService.Login(creds)
+        console.log('user', user, creds)
         commit('setUser', user)
         router.push({ name: "boards" })
       } catch (e) {

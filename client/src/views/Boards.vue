@@ -1,6 +1,7 @@
 <template>
   <div class="boards">
     WELCOME TO THE BOARDS!!!
+    <Logout-element></Logout-element>
     <form @submit.prevent="addBoard">
       <input type="text" placeholder="title" v-model="newBoard.title" required>
       <input type="text" placeholder="description" v-model="newBoard.description">
@@ -13,6 +14,8 @@
 </template>
 
 <script>
+  import Logout from "@/components/Logout.vue"
+
   export default {
     name: "boards",
     mounted() {
@@ -36,6 +39,9 @@
         this.$store.dispatch("addBoard", this.newBoard);
         this.newBoard = { title: "", description: "" };
       }
+    },
+    components: {
+      'Logout-element': Logout
     }
   };
 </script>
