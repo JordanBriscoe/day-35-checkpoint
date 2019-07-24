@@ -1,5 +1,5 @@
 <template>
-  <div class="task-element">
+  <drag class="task-element" :transfer-data="task._id">
     <p>{{task.description}}</p>
     <form @submit.prevent="addComment">
       <input type="text" placeholder="comment" v-model='newComment.description' required>
@@ -11,11 +11,13 @@
       <button @click="deleteComment(comment._id)" class='btn btn-outline-danger'>Delete Comment</button>
     </div>
     <button @click="deleteTask" class='btn btn-outline-danger'>Delete Task</button>
-  </div>
+  </drag>
 </template>
 
 
 <script>
+  import { Drop, Drag } from 'vue-drag-drop'; // needs both to compile
+
   export default {
     name: 'task-element',
     props: ['task'],
@@ -43,7 +45,9 @@
         this.$store.dispatch('deleteComment', { commentId: commentId, taskId: this.task._id });
       }
     },
-    components: {}
+    components: {
+      Drag
+    }
   }
 </script>
 

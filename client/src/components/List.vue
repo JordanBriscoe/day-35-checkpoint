@@ -6,7 +6,9 @@
         <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
       </div>
     </div>
-    <task-element v-for="task in tasks" v-bind:task="task" class="row"></task-element>
+    <drop class="drop" @dragover="over = true" @dragleave="over = false" @drop="handleDrop">
+      <task-element v-for="task in tasks" v-bind:task="task" class="row"></task-element>
+    </drop>
     <div class="row">
       <div class="col">
         <form @submit.prevent="addTask">
@@ -20,12 +22,14 @@
 
 <script>
   import Task from '@/components/Task.vue'
+  import { Drop, Drag } from 'vue-drag-drop' // needs both to compile
 
   export default {
     name: 'list-element',
     props: ['list'],
     components: {
-      'task-element': Task
+      'task-element': Task,
+      'drop': Drop
     },
     computed: {
       tasks() {
@@ -52,6 +56,9 @@
           listId: this.list._id,
           boardId: this.list.boardId
         }
+      },
+      handleDrop(data) {
+        alert(`You dropped with data: ${JSON.stringify(data)} on list ${this.list.title}`);
       }
     }
   }
