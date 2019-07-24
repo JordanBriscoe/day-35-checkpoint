@@ -9,7 +9,9 @@ export default class TasksController {
             .use(Authorize.authenticated)
             .get('/board/:boardId', this.getByBoardId)
             .post('', this.create)
+            .put('/:id/comment', this.addComment)
             .put('/:id', this.edit)
+            .delete('/:id/comment/:commentId', this.deleteComment)
             .delete('/:id', this.delete)
             .use(this.defaultRoute)
     }
@@ -45,10 +47,34 @@ export default class TasksController {
         } catch (error) { next(error) }
     }
 
+    async addComment(req, res, next) {
+        try {
+            req.body['authorId'] = req.session.uid
+            let taskToUpdate = await _taskService.findOne({ _id: req.params.id, authorId: req.session.uid })
+            if (taskToUpdate) {
+                //@ts-ignore
+                taskToUpdate.children.push(req.body)
+                taskToUpdate.save();
+                return res.send(taskToUpdate)
+            }
+            throw new Error("invalid id")
+        } catch (error) { next(error) }
+    }
+
     async delete(req, res, next) {
         try {
             await _taskService.findOneAndRemove({ _id: req.params.id, authorId: req.session.uid })
             return res.send("Successfully deleted")
+        } catch (error) { next(error) }
+    }
+
+    async deleteComment(req, res, next) {
+        try {
+            let taskToUpdate = await _taskService.findOne({ _id: req.params.id, authorId: req.session.uid })
+            //@ts-ignore
+            taskToUpdate.children.id(req.params.commentId).remove();
+            taskToUpdate.save();
+            return res.send(taskToUpdate)
         } catch (error) { next(error) }
     }
 }

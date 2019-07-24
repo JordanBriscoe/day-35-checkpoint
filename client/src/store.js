@@ -52,6 +52,10 @@ export default new Vuex.Store({
     },
     setActiveTasks(state, tasks) {
       state.activeTasks = tasks
+    },
+    updateTask(state, task) {
+      let index = state.activeTasks.findIndex(elem => elem._id === task._id)
+      state.activeTasks.splice(index, 1, task)
     }
   },
   actions: {
@@ -142,6 +146,16 @@ export default new Vuex.Store({
     getTasksByBoard({ commit, dispatch }, boardId) {
       api.get('tasks/board/' + boardId)
         .then(res => commit('setActiveTasks', res.data))
+        .catch(error => console.error(error))
+    },
+    addComment({ commit, dispatch }, payload) {
+      api.put('tasks/' + payload.taskId + '/comment', payload.comment)
+        .then(res => commit('updateTask', res.data))
+        .catch(error => console.error(error))
+    },
+    deleteComment({ commit, dispatch }, payload) {
+      api.delete('tasks/' + payload.taskId + '/comment/' + payload.commentId)
+        .then(res => commit('updateTask', res.data))
         .catch(error => console.error(error))
     }
 

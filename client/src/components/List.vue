@@ -41,9 +41,6 @@
         }
       }
     },
-    mounted() {
-
-    },
     methods: {
       deleteList() {
         this.$store.dispatch('deleteList', this.list._id)
