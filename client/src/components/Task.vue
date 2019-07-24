@@ -1,5 +1,5 @@
 <template>
-  <drag class="task-element" :transfer-data="task._id">
+  <drag class="task-element" :transfer-data="task">
     <p>{{task.description}}</p>
     <form @submit.prevent="addComment">
       <input type="text" placeholder="comment" v-model='newComment.description' required>

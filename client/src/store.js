@@ -157,6 +157,11 @@ export default new Vuex.Store({
       api.delete('tasks/' + payload.taskId + '/comment/' + payload.commentId)
         .then(res => commit('updateTask', res.data))
         .catch(error => console.error(error))
+    },
+    updateTaskListId({ commit, dispatch }, payload) {
+      api.put('tasks/' + payload._id, payload)
+        .then(res => commit('updateTask', res))
+        .catch(error => console.error(error))
     }
 
     //#endregion

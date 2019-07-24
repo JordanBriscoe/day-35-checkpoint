@@ -6,8 +6,8 @@
         <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
       </div>
     </div>
-    <drop class="drop" @dragover="over = true" @dragleave="over = false" @drop="handleDrop">
-      <task-element v-for="task in tasks" v-bind:task="task" class="row"></task-element>
+    <drop class="drop" @drop="handleDroppedTask">
+      <task-element v-for="task in tasks" :key="task._id" v-bind:task="task" class="row"></task-element>
     </drop>
     <div class="row">
       <div class="col">
@@ -57,8 +57,10 @@
           boardId: this.list.boardId
         }
       },
-      handleDrop(data) {
-        alert(`You dropped with data: ${JSON.stringify(data)} on list ${this.list.title}`);
+      handleDroppedTask(task) {
+        if (task.listId != this.list._id) {
+          this.$store.dispatch('updateTaskListId', { _id: task._id, listId: this.list._id });
+        }
       }
     }
   }
