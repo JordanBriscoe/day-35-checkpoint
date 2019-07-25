@@ -24,11 +24,11 @@
     },
     computed: {
       lists() {
-        return this.$store.state.activeLists
+        return this.$store.state.listModule.activeLists
       },
       board() {
         return (
-          this.$store.state.activeBoard || {
+          this.$store.state.boardModule.activeBoard || {
             title: "Loading..."
           }
         );

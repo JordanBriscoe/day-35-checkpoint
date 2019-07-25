@@ -33,7 +33,7 @@
     },
     computed: {
       tasks() {
-        return this.$store.state.activeTasks.filter(curr => curr.listId === this.list._id);
+        return this.$store.state.taskModule.activeTasks.filter(curr => curr.listId === this.list._id);
       },
     },
     data() {

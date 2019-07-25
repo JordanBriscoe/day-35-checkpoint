@@ -32,7 +32,7 @@
     },
     computed: {
       boards() {
-        return this.$store.state.boards;
+        return this.$store.state.boardModule.boards;
       }
     },
     methods: {
