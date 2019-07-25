@@ -1,15 +1,36 @@
 <template>
   <div class="boards">
-    WELCOME TO THE BOARDS!!!
     <Logout-element></Logout-element>
-    <form @submit.prevent="addBoard">
-      <input type="text" placeholder="title" v-model="newBoard.title" required>
-      <input type="text" placeholder="description" v-model="newBoard.description">
-      <button type="submit">Create Board</button>
-    </form>
-    <div v-for="board in boards" :key="board._id">
-      <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
-      <button class="btn btn-danger" @click="deleteBoard(board._id)">Delete</button>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>
+            Bob the Board Builder
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form @submit.prevent="addBoard">
+            <input type="text" placeholder="title" v-model="newBoard.title" required>
+            <input type="text" placeholder="description" v-model="newBoard.description">
+            <button type="submit">Create Board</button>
+          </form>
+        </div>
+      </div>
+      <div class="row boardtable">
+        <div class="col">
+          <div class="row boardrow justify-content-center" v-for="board in boards" :key="board._id">
+            <div class="col-2 m-auto">
+              <router-link :to="{name: 'board', params: {boardId: board._id}}">{{board.title}}</router-link>
+            </div>
+            <div class="col m-auto">
+              {{board.description}}
+            </div>
+            <button class="col-2 btn btn-danger rounded-0" @click="deleteBoard(board._id)">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,3 +70,14 @@
     }
   };
 </script>
+
+<style scoped>
+  .boardtable {
+    background-color: #fff;
+  }
+
+  .boardrow {
+    border: 1px solid;
+    border-color: black;
+  }
+</style>
