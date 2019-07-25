@@ -33,7 +33,6 @@ export default new Vuex.Store({
     },
     resetState(state) {
       state.user = {}
-      console.log(state)
       // @ts-ignore
       state.boardModule.boards = []
       // @ts-ignore
