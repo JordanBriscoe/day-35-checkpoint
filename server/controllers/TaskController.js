@@ -22,7 +22,13 @@ export default class TasksController {
 
     async getByBoardId(req, res, next) {
         try {
-            let data = await _taskService.find({ authorId: req.session.uid, boardId: req.params.boardId })
+            let data = await _taskService.find({ authorId: req.session.uid, boardId: req.params.boardId }).populate('authorId')
+            for (let i = 0; i < data.length; i++) {
+                let newKids = await _taskService.populate(data[i].children, {
+                    path: 'authorId'
+                });
+                data[i].children = newKids;
+            }
             return res.send(data)
         } catch (error) {
             next(error)

@@ -63,11 +63,3 @@
     props: ["boardId"]
   };
 </script>
-
-<style>
-  .listbox {
-    /* overflow-x: auto;
-    min-width: 75vw;
-    max-width: 75vw; */
-  }
-</style>

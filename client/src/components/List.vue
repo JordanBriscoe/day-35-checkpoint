@@ -1,5 +1,5 @@
 <template>
-  <drop class="drop list-element col m-3 bg-primary p-3 rounded" @drop="handleDroppedTask">
+  <drop class="drop list-element col m-3 bg-white p-3 rounded" @drop="handleDroppedTask">
     <div class="row mb-3">
       <div class="col-12">
         <h3>{{list.title}}</h3>
