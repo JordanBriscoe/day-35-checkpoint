@@ -50,6 +50,11 @@ export default {
       api.delete('/' + boardId)
         .then(res => commit('deleteBoard', boardId))
         .catch(error => console.error(error))
+    },
+    addCollaborator({ commit, dispatch }, board) {
+      api.put('/' + board._id, board)
+        .then(res => commit('setActiveBoard', res.data))
+        .catch(error => console.error(error))
     }
   }
 }

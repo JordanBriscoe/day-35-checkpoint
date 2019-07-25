@@ -10,6 +10,10 @@
           <input type="text" placeholder="title" v-model='newList.title' required>
           <button class="btn btn-success" type="submit">Create New List</button>
         </form>
+        <form @submit.prevent="addList">
+          <input type="text" placeholder="title" v-model='collaborator' required>
+          <button class="btn btn-success" type="submit">Add Collaborator</button>
+        </form>
       </div>
     </div>
     <div class="row listbox my-5 p-3">
@@ -48,7 +52,8 @@
         newList: {
           title: '',
           boardId: this.boardId
-        }
+        },
+        collaborator: ''
       }
     },
     methods: {
@@ -58,6 +63,16 @@
           title: '',
           boardId: this.boardId
         }
+      },
+      addCollaborator() {
+        let newCollaborator = this.board.collaborators.slice(0)
+        newCollaborator.push(this.collaborator);
+        let updateValue = {
+          _id: this.board._id,
+          collaborators: newCollaborator
+        };
+        this.$store.dispatch('addCollaborator', updateValue);
+        this.collaborator = ''
       }
     },
     props: ["boardId"]
