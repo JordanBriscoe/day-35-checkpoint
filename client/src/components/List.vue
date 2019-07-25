@@ -1,23 +1,32 @@
 <template>
-  <div class="list-element container">
-    <div class="row">
-      <div class="col">
-        {{list.title}}
-        <button @click="deleteList" class='btn btn-outline-danger'>Delete List</button>
+  <drop class="drop list-element col m-3 bg-primary p-3 rounded" @drop="handleDroppedTask">
+    <div class="row mb-3">
+      <div class="col-12">
+        <h3>{{list.title}}</h3>
       </div>
-    </div>
-    <drop class="drop py-5" @drop="handleDroppedTask">
-      <task-element v-for="task in tasks" :key="task._id" v-bind:task="task" class="row"></task-element>
-    </drop>
-    <div class="row">
-      <div class="col">
+      <div class="col-6 mb-3">
+        <a class="btn btn-success" data-toggle="collapse" :href="'#_' + list._id" role="button">+</a>
+      </div>
+      <div class="col-6 mb-3">
+        <button @click="deleteList" class='btn btn-outline-danger'>X</button>
+      </div>
+      <div class="col-12 collapse" :id="'_' + list._id">
         <form @submit.prevent="addTask">
-          <textarea type="textarea" placeholder="description" v-model='newTask.description' required> </textarea>
-          <button type="submit" class='btn btn-outline-success'>Create New Task</button>
+          <div class="row">
+            <div class="col-12">
+              <textarea type="textarea" placeholder="description" v-model='newTask.description' required> </textarea>
+            </div>
+            <div class="col-12">
+              <button type="submit" class='btn btn-success'>Create New Task</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
-  </div>
+    <div class="col">
+      <task-element v-for="task in tasks" :key="task._id" v-bind:task="task" class="row"></task-element>
+    </div>
+  </drop>
 </template>
 
 <script>
@@ -67,4 +76,11 @@
 </script>
 
 <style scoped>
+  .list-element {
+    min-height: 75vh;
+    max-height: 75vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-wrap: nowrap;
+  }
 </style>

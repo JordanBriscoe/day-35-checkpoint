@@ -1,11 +1,20 @@
 <template>
-  <div class="board">
-    <h3>{{board.title}}</h3>
-    <form @submit.prevent="addList">
-      <input type="text" placeholder="title" v-model='newList.title' required>
-      <button type="submit">Create New List</button>
-    </form>
-    <list-element v-for="list in lists" v-bind:list="list"></list-element>
+  <div class="board container-fluid">
+    <div class="row">
+      <div class="col">
+        <h3>{{board.title}}</h3>
+        <h5>{{board.description}}</h5>
+      </div>
+      <div class="col align-self-end">
+        <form @submit.prevent="addList">
+          <input type="text" placeholder="title" v-model='newList.title' required>
+          <button class="btn btn-success" type="submit">Create New List</button>
+        </form>
+      </div>
+    </div>
+    <div class="row listbox my-5 p-3">
+      <list-element v-for="list in lists" v-bind:list="list"></list-element>
+    </div>
   </div>
 </template>
 
@@ -54,3 +63,11 @@
     props: ["boardId"]
   };
 </script>
+
+<style>
+  .listbox {
+    /* overflow-x: auto;
+    min-width: 75vw;
+    max-width: 75vw; */
+  }
+</style>

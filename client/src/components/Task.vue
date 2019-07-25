@@ -1,9 +1,9 @@
 <template>
-  <drag class="task-element" :transfer-data="task">
+  <drag class="task-element row" :transfer-data="task">
     <p>{{task.description}}</p>
     <form @submit.prevent="addComment">
       <input type="text" placeholder="comment" v-model='newComment.description' required>
-      <button type="submit">Create New Comment</button>
+      <button class="btn btn-success" type="submit">Create New Comment</button>
     </form>
     <div v-for="comment in task.children">
       <p>filler text</p>
