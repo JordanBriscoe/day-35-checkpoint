@@ -45,6 +45,11 @@ export default class BoardsController {
 
   async edit(req, res, next) {
     try {
+      // restricted the ability to add duplicate collaborators
+      // cast to a set to remove duplicates and then cast it back to an array
+      if (req.body.collaborators) {
+        req.body.collaborators = [...new Set(req.body.collaborators)];
+      }
       let data = await _boardService.findOneAndUpdate({ _id: req.params.id, authorId: req.session.uid }, req.body, { new: true })
       if (data) {
         return res.send(data)
