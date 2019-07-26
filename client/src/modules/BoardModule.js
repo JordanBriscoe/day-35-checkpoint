@@ -55,6 +55,11 @@ export default {
       api.put('/' + board._id, board)
         .then(res => commit('setActiveBoard', res.data))
         .catch(error => console.error(error))
+    },
+    killCollaborator({ commit, dispatch }, updatedBoard) {
+      api.put('/' + updatedBoard._id, updatedBoard)
+        .then(res => commit('setActiveBoard', res.data))
+        .catch(error => console.error(error))
     }
   }
 }
