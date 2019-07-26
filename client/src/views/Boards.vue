@@ -27,7 +27,9 @@
             <div class="col m-auto">
               {{board.description}}
             </div>
-            <button class="col-2 btn btn-danger rounded-0" @click="deleteBoard(board._id)">Delete</button>
+            <button class="col-2 btn btn-danger rounded-0" v-if="board.authorId == userId"
+              @click="deleteBoard(board._id)">Delete</button>
+            <div v-else class="col-2">Other User's Board</div>
           </div>
         </div>
       </div>
@@ -54,6 +56,9 @@
     computed: {
       boards() {
         return this.$store.state.boardModule.boards;
+      },
+      userId() {
+        return this.$store.state.user._id;
       }
     },
     methods: {
